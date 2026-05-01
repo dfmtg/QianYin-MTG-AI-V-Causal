@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 千因 - MTG AI V-Causal
 
 ## 新型串行因果推理AI系统
@@ -356,3 +357,7 @@ pip install psutil
 **⭐ 如果这个项目对你有帮助，请给我们一个Star！**
 
 **🚀 让我们一起探索串行因果推理的无限可能！**
+=======
+# QianYin-MTG-AI-V-Causal
+千因 MTG AI V-Causal - 基于串行因果推理的新型AI系统，完全脱离Transformer并行架构，纯CPU高效运行 QianYin - A new serial causal inference AI, completely free from Transformer's parallel architecture, CPU-optimized
+>>>>>>> a9fc2b50245e2914858ffd7eccd15e3942af6303
