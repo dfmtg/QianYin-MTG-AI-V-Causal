@@ -11,60 +11,47 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - os: windows-latest
-            artifact_name: QianYin-MTG-AI-V-Causal-Windows
-            executable_ext: .exe
-          - os: macos-latest
-            artifact_name: QianYin-MTG-AI-V-Causal-macOS
-            executable_ext: ''
-          - os: ubuntu-latest
-            artifact_name: QianYin-MTG-AI-V-Causal-Linux
-            executable_ext: ''
+        os:
+          - windows-latest
+          - macos-latest
+          - ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.8'
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install pyinstaller==5.13.2
+          pip install pyinstaller
 
       - name: Build on Windows
         if: matrix.os == 'windows-latest'
+        shell: bash
         run: |
-          pyinstaller --onefile --windowed --name "QianYin-MTG-AI-V-Causal" --add-data ".;." "MTG AI V-Causal.py"
+          pyinstaller --onefile --name "QianYin-MTG-AI-V-Causal-Windows" "MTG AI V-Causal.py"
 
       - name: Build on macOS
         if: matrix.os == 'macos-latest'
+        shell: bash
         run: |
-          pyinstaller --onefile --windowed --name "QianYin-MTG-AI-V-Causal" --add-data ".;." "MTG AI V-Causal.py"
+          pyinstaller --onefile --name "QianYin-MTG-AI-V-Causal-macOS" "MTG AI V-Causal.py"
 
       - name: Build on Linux
         if: matrix.os == 'ubuntu-latest'
+        shell: bash
         run: |
-          pyinstaller --onefile --name "QianYin-MTG-AI-V-Causal" --add-data ".;." "MTG AI V-Causal.py"
-
-      - name: Rename executable
-        run: |
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            mv "dist/QianYin-MTG-AI-V-Causal.exe" "dist/QianYin-MTG-AI-V-Causal-Windows.exe"
-          elif [ "${{ matrix.os }}" == "macos-latest" ]; then
-            mv "dist/QianYin-MTG-AI-V-Causal" "dist/QianYin-MTG-AI-V-Causal-macOS"
-          else
-            mv "dist/QianYin-MTG-AI-V-Causal" "dist/QianYin-MTG-AI-V-Causal-Linux"
-          fi
+          pyinstaller --onefile --name "QianYin-MTG-AI-V-Causal-Linux" "MTG AI V-Causal.py"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact_name }}
+          name: ${{ matrix.os }}-artifact
           path: dist/*
 
   release:
@@ -77,13 +64,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: artifacts
-          merge-multiple: true
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: ncipollo/release-action@v1
         with:
-          files: artifacts/**/*
+          artifacts: artifacts
           draft: false
           prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}

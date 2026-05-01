@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 千因 - MTG AI V-Causal
 
 ## 新型串行因果推理AI系统
@@ -60,8 +59,8 @@
 
 ```bash
 # 1. 克隆项目
-git clone https://github.com/你的用户名/MTG-AI-V-Causal.git
-cd MTG-AI-V-Causal
+git clone https://github.com/dfmtg/QianYin-MTG-AI-V-Causal.git
+cd QianYin-MTG-AI-V-Causal
 
 # 2. (可选) 安装psutil以启用硬件监控
 pip install psutil
@@ -150,7 +149,7 @@ Content-Type: application/json
   "api_key": "你的API密钥",
   "input": "用户输入",
   "response": "模型响应",
-  "mode": "refine"  // refine/full/intensive/interactive
+  "mode": "refine"
 }
 ```
 
@@ -176,7 +175,7 @@ GET /health              # 健康检查
 
 #### 聊天记录
 ```http
-GET /export_chat         # 导出对话历史 (需要Authorization头)
+GET /export_chat         # 导出对话历史
 POST /import_chat         # 导入对话历史 (需要api_key, chat_history)
 ```
 
@@ -333,8 +332,8 @@ pip install psutil
 
 **千因 MTG AI V-Causal**
 
-- GitHub: [你的GitHub地址]
-- 邮箱: 你的邮箱地址
+- GitHub: https://github.com/dfmtg
+- 邮箱: mtgwimtg@163.com
 
 ---
 
@@ -357,7 +356,3 @@ pip install psutil
 **⭐ 如果这个项目对你有帮助，请给我们一个Star！**
 
 **🚀 让我们一起探索串行因果推理的无限可能！**
-=======
-# QianYin-MTG-AI-V-Causal
-千因 MTG AI V-Causal - 基于串行因果推理的新型AI系统，完全脱离Transformer并行架构，纯CPU高效运行 QianYin - A new serial causal inference AI, completely free from Transformer's parallel architecture, CPU-optimized
->>>>>>> a9fc2b50245e2914858ffd7eccd15e3942af6303

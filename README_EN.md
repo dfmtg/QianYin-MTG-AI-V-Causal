@@ -12,7 +12,7 @@
 
 ## 📖 Project Overview
 
-**QianYin** is an AI system based on a **next-generation serial causal inference architecture**, completely脱离了 traditional Transformer's parallel architecture. It uses a pure serial inference engine and runs efficiently on CPU.
+**QianYin** is an AI system based on a **next-generation serial causal inference architecture**, completely different from traditional Transformer's parallel architecture. It uses a pure serial inference engine and runs efficiently on CPU.
 
 ### Core Features
 
@@ -59,8 +59,8 @@
 
 ```bash
 # 1. Clone the project
-git clone https://github.com/yourusername/MTG-AI-V-Causal.git
-cd MTG-AI-V-Causal
+git clone https://github.com/dfmtg/QianYin-MTG-AI-V-Causal.git
+cd QianYin-MTG-AI-V-Causal
 
 # 2. (Optional) Install psutil for hardware monitoring
 pip install psutil
@@ -149,7 +149,7 @@ Content-Type: application/json
   "api_key": "your_api_key",
   "input": "User input",
   "response": "Model response",
-  "mode": "refine"  // refine/full/intensive/interactive
+  "mode": "refine"
 }
 ```
 
@@ -175,7 +175,7 @@ GET /health              # Health check
 
 #### Chat History
 ```http
-GET /export_chat         # Export chat history (requires Authorization header)
+GET /export_chat         # Export chat history
 POST /import_chat         # Import chat history (requires api_key, chat_history)
 ```
 
@@ -332,8 +332,8 @@ This project is licensed under the GNU General Public License v3.0 (GPLv3) - see
 
 **QianYin MTG AI V-Causal**
 
-- GitHub: [Your GitHub Address]
-- Email: Your Email Address
+- GitHub: https://github.com/dfmtg
+- Email: mtgwimtg@163.com
 
 ---
 
