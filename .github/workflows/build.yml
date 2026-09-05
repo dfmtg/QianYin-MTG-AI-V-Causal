@@ -14,7 +14,8 @@ jobs:
       matrix:
         os:
           - windows-latest
-          - macos-latest
+          - macos-13  # Intel
+          - macos-latest  # ARM
           - ubuntu-latest
 
     steps:
@@ -38,20 +39,19 @@ jobs:
           pyinstaller --onefile --name "QianYin-MTG-AI-V-Causal-Windows" "MTG AI V-Causal.py"
           echo "BUILD_PLATFORM=windows" >> $GITHUB_ENV
 
-      - name: Build on macOS (Intel/ARM)
+      - name: Build on macOS (Intel)
+        if: matrix.os == 'macos-13'
+        shell: bash
+        run: |
+          pyinstaller --onefile --name "QianYin-MTG-AI-V-Causal-macOS-Intel" "MTG AI V-Causal.py"
+          echo "BUILD_PLATFORM=macos-intel" >> $GITHUB_ENV
+
+      - name: Build on macOS (ARM)
         if: matrix.os == 'macos-latest'
         shell: bash
         run: |
-          # Detect chip architecture
-          ARCH=$(uname -m)
-          if [ "$ARCH" = "arm64" ]; then
-            # M-series chips: use arm64 architecture
-            pyinstaller --onefile --name "QianYin-MTG-AI-V-Causal-macOS-ARM64" "MTG AI V-Causal.py"
-          else
-            # Intel chips: use x86_64 architecture
-            pyinstaller --onefile --name "QianYin-MTG-AI-V-Causal-macOS-Intel" "MTG AI V-Causal.py"
-          fi
-          echo "BUILD_PLATFORM=macos" >> $GITHUB_ENV
+          pyinstaller --onefile --name "QianYin-MTG-AI-V-Causal-macOS-ARM64" "MTG AI V-Causal.py"
+          echo "BUILD_PLATFORM=macos-arm" >> $GITHUB_ENV
 
       - name: Build on Linux
         if: matrix.os == 'ubuntu-latest'
