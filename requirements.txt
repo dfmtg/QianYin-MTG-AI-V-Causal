@@ -16,8 +16,10 @@
 # - random
 # - os
 # - socket
-# - tkinter (通常随Python一起安装)
-# - tkinter (usually comes with Python)
+# - http.server
+# - urllib.parse
+# - lz4 (必选，用于LZ4压缩模型保存)
+# - lz4 (Required for LZ4 compression)
 
 # ============================================
 # 可选依赖 (推荐安装)
@@ -34,23 +36,27 @@ psutil>=5.9.0
 # 安装命令: pip install requests
 requests>=2.28.0
 
+# lz4 - 用于LZ4压缩模型保存（必选）
+# lz4 - For LZ4 compression (Required)
+# 安装命令: pip install lz4
+lz4>=1.0.0
+
 # ============================================
 # 平台特定说明
 # Platform-Specific Notes
 # ============================================
 
 # Windows (视窗系统)
-# - tkinter: 通常预装，无需额外安装
-# - tkinter: Usually pre-installed, no extra installation needed
+# - lz4: 需要安装 (pip install lz4)
+# - lz4: Required (pip install lz4)
 
 # macOS (苹果系统)
-# - 安装tkinter: brew install python-tk
-# - Install tkinter: brew install python-tk
+# - lz4: 需要安装 (pip install lz4)
+# - Install lz4: pip install lz4
 
 # Linux (Linux系统)
-# - Ubuntu/Debian: sudo apt-get install python3-tk
-# - Fedora/RHEL: sudo dnf install python3-tkinter
-# - Install tkinter: sudo apt-get install python3-tk
+# - lz4: 需要安装 (pip install lz4)
+# - Install lz4: pip install lz4
 
 # ============================================
 # 快速安装
@@ -63,7 +69,7 @@ requests>=2.28.0
 
 # 仅安装核心依赖 (仅安装核心功能)
 # Install core dependencies only
-# pip install psutil requests
+# pip install lz4 psutil requests
 
 # ============================================
 # 版本兼容性
@@ -81,11 +87,10 @@ requests>=2.28.0
 # Troubleshooting
 # ============================================
 
-# tkinter问题:
-# tkinter issues:
-# - Windows: 重新安装Python，勾选"tcl/tk"选项
-# - macOS: brew install python-tk
-# - Linux: sudo apt-get install python3-tk
+# lz4问题:
+# lz4 issues:
+# - 确保已安装: pip install lz4
+# - Ensure installed: pip install lz4
 
 # psutil安装失败:
 # psutil installation failed:
