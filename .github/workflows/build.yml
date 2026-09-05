@@ -88,27 +88,43 @@ jobs:
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
-            ## QianYin MTG AI V-Causal v${{ github.ref_name }}
+            ## 🎉 千因 MTG AI V-Causal v${{ github.ref_name }} 正式发布！
 
-            ### Build Artifacts
-            - Windows: QianYin-MTG-AI-V-Causal-Windows.exe
-            - macOS (Intel): QianYin-MTG-AI-V-Causal-macOS-Intel
-            - macOS (ARM): QianYin-MTG-AI-V-Causal-macOS-ARM64
-            - Linux: QianYin-MTG-AI-V-Causal-Linux
+            ### 📖 项目介绍
+            千因是一款基于**新型串行因果推理架构**的AI系统，完全脱离传统Transformer的并行架构，采用纯串行推理引擎，在CPU上高效运行。
 
-            ### Features
-            - Serial causal inference architecture (non-Transformer)
-            - CPU-efficient, no GPU required
-            - Real-time learning during conversations
-            - IPv4/IPv6 dual-stack support
-            - Web admin interface (port 8080)
-            - OpenAI compatible API
-            - Human feedback training system
-            - LZ4 compression support
-            - Snapshot system for fast recovery
+            ### ✨ 核心特性
+            - 🧠 串行因果推理：不同于Transformer的并行自注意力
+            - ⚡ CPU高效运行：无需GPU，完全在CPU上执行
+            - 🔄 实时学习：支持对话中增量学习
+            - 🌐 双栈网络：支持IPv4/IPv6
+            - 🖥️ 跨平台：Windows/macOS/Linux全支持
+            - 🔮 模糊匹配：基于字符n-gram相似度的模糊状态跳转
+            - 📸 快照系统：轻量化快照快速恢复
+            - 👥 多会话管理：支持创建、删除、重命名会话
+            - 🔌 OpenAI兼容：提供 /v1/chat/completions 接口
+            - 🎯 人类反馈训练：5档评分体系
+            - 🖥️ Web管理界面：端口8080
+            - 💾 模型持久化：支持JSON/Gzip/LZ4压缩
+            - 🔒 并发控制：请求排队限流
 
-            ### Installation
-            ```bash
-            pip install lz4 psutil
-            python "MTG AI V-Causal.py"
-            ```
+            ### 📦 下载版本
+            - Windows版本：双击即用
+            - macOS Intel版本：双击即用
+            - macOS ARM版本：双击即用
+            - Linux版本：赋予执行权限后运行
+
+            ### 🚀 使用方法
+            - 下载对应系统的版本
+            - 解压（如需要）
+            - 双击运行
+            - 开始使用千因AI！
+
+            ### 📋 系统要求
+            - 无需Python环境（已编译为可执行文件）
+            - 或直接使用源码运行（需要Python 3.8+）
+
+            ### 📄 许可证
+            GPL-3.0
+
+            ⭐ 如果这个项目对你有帮助，请给我们一个Star！
