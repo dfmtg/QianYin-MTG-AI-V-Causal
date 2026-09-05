@@ -63,9 +63,8 @@
 ### 环境要求
 
 - Python 3.8 或更高版本
-- tkinter (通常随Python一起安装，仅GUI模式需要)
+- lz4 (必选，用于LZ4压缩模型保存)
 - psutil (可选，用于CPU/内存监控)
-- lz4 (可选，用于LZ4压缩模型保存)
 
 ### 安装步骤
 
@@ -74,11 +73,11 @@
 git clone https://github.com/dfmtg/QianYin-MTG-AI-V-Causal.git
 cd QianYin-MTG-AI-V-Causal
 
-# 2. (可选) 安装依赖
-pip install psutil lz4
+# 2. 安装依赖（lz4 必选）
+pip install lz4 psutil
 
 # 3. 运行程序
-python "MTG AI V-Causal.py"
+python "MTG_AI_V-Causal_2.26.py"
 ```
 
 ---
@@ -353,18 +352,15 @@ Content-Type: application/json
 
 ### Windows
 - ✅ 完整支持
-- ✅ tkinter自带支持
 - ✅ IPv4/IPv6双栈
 
 ### macOS
 - ✅ 完整支持
-- ✅ tkinter需手动安装 (`brew install python-tk`)
 - ✅ IPv4/IPv6双栈
 - ✅ 支持Intel和M系列芯片
 
 ### Linux
 - ✅ 完整支持
-- ✅ tkinter需手动安装 (`sudo apt-get install python3-tk`)
 - ✅ IPv4/IPv6双栈
 
 ---
@@ -380,9 +376,7 @@ pip install psutil
 ### 问题2: tkinter导入错误
 **Windows**: 重新安装Python，勾选"tcl/tk"选项
 **macOS**: `brew install python-tk`
-**Linux**: `sudo apt-get install python3-tk`
-
-### 问题3: 端口被占用
+**Linux**端口被占用
 修改`config.json`中的端口号：
 ```json
 {
@@ -392,11 +386,8 @@ pip install psutil
 }
 ```
 
-### 问题4: LZ4压缩不可用
-**解决方案**: 安装lz4库
-```bash
-pip install lz4
-```
+### 问题3: LZ4压缩不可用
+**解决方案**: 安装lz4库（必选）
 
 ---
 
@@ -453,7 +444,6 @@ pip install lz4
 ## 🙏 致谢
 
 - Python社区
-- Tkinter团队
 - 所有开源贡献者
 
 ---
