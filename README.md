@@ -1,133 +1,336 @@
-# 🌸 千因 - MTG AI V-Causal 🌸
+# 千因 - MTG AI V-Causal
 
-嗨嗨～欢迎来到千因的小世界！(◍•ᴗ•◍)
+## 新型串行因果推理AI系统
 
-这是一个**纯 Python 手写**的轻量级因果语言模型，不用装任何第三方库，开箱即用哦～✨
-
----
-
-## 🎯 千因有什么超能力？
-
-| 技能 | 说明 |
-|------|------|
-| 🧠 **多层因果推理** | 24 层注意力矩阵，像小脑瓜一样层层思考～ |
-| 🔮 **语义编码** | 4096 维向量，能理解文字背后的"感觉" |
-| 📝 **智能分词** | 中英文混排也能搞定，最大子词长度可自定义 |
-| 💬 **短语学习** | 支持对话式 / 完整 / 强化 / 交互式四种训练模式 |
-| 🎭 **性格系统** | 10 维性格特质，可以慢慢塑造千因的"个性" |
-| ❤️ **偏好管理** | 喜欢什么话题、讨厌什么，千因都会记住哦 |
-| 📊 **人类反馈训练** | 5 档评分体系，夸夸或批评都能让千因成长～ |
-| 👥 **多会话管理** | 可以创建多个独立会话，各自学习互不干扰 |
-| 🔌 **API 接口** | OpenAI 兼容格式，接入超方便 |
-| 🖥️ **Web 管理界面** | 浏览器里就能聊天、训练、调性格，超直观！ |
-| 💾 **模型持久化** | 支持 JSON / Gzip / LZ4 压缩，数据不会丢 |
-| 📸 **自动快照** | 定时保存快照，防止意外丢失学习成果 |
-| 🔒 **并发控制** | 请求排队 + 读写锁，多线程也不怕乱 |
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.8+-blue.svg" alt="Python">
+  <img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License">
+  <img src="https://img.shields.io/badge/Architecture-Serial%20Causal-orange.svg" alt="Architecture">
+  <img src="https://img.shields.io/badge/Version-2.26-blue.svg" alt="Version">
+</p>
 
 ---
 
-## 🚀 快速开始
+## 📖 项目简介
 
-```bash
-python MTG_AI_V-Causal_2.26.py
-```
+**千因（QianYin）** 是一款基于**新型串行因果推理架构**的AI系统，完全脱离传统Transformer的并行架构，采用纯串行推理引擎，在CPU上高效运行。
 
-启动后打开浏览器访问 `http://localhost:8080/admin` 就能和千因聊天啦～(≧∇≦)ﾉ
+### 核心特性
+
+- 🧠 **串行因果推理**: 不同于Transformer的并行自注意力，采用多层串行因果推理
+- ⚡ **CPU高效运行**: 无需GPU，完全在CPU上执行推理
+- 🔄 **实时学习**: 支持对话中增量学习，更新模型权重
+- 🌐 **双栈网络**: 支持IPv4/IPv6双协议栈
+- 🖥️ **跨平台支持**: Windows/Mac OS/Linux全平台兼容
+- 🔮 **模糊匹配**: 基于字符n-gram相似度的模糊状态跳转
+- 📸 **快照系统**: 轻量化快照快速恢复，防止数据丢失
+- 👥 **多会话管理**: 支持创建、删除、重命名会话
+- 🔌 **OpenAI兼容**: 提供 `/v1/chat/completions` 接口
+- 🎯 **人类反馈训练**: 5档评分体系，支持正向强化与负向惩罚
+- 🖥️ **Web管理界面**: 端口8080，支持对话、训练、性格、偏好等管理
+- 💾 **模型持久化**: 支持JSON/Gzip/LZ4压缩格式
+- 🔒 **并发控制**: 请求排队限流，读写锁保护
 
 ---
 
-## 📡 端口说明
+## 🏗️ 技术架构
 
-| 端口 | 服务 | 说明 |
-|------|------|------|
-| **4000** | API 服务器 | OpenAI 兼容接口，需要 API Key 🔑 |
-| **9000** | CISL 接口 | 无鉴权，免费随便用～ 🎉 |
-| **8080** | Web 管理界面 | 图形化后台，聊天训练都在这里！ |
+### 串行因果推理 vs Transformer
+
+| 特性 | 千因（串行因果） | Transformer |
+|------|----------------|-------------|
+| 推理方式 | 串行逐步推理 | 并行自注意力 |
+| 依赖GPU | 否 | 是 |
+| 内存占用 | 低 | 高 |
+| 因果追踪 | 原生支持 | 需额外位置编码 |
+| 推理速度 | 中等 | 快 |
+| 可解释性 | 高 | 中 |
+
+### 核心技术
+
+- **语义编码器**: 4096维度向量空间，支持梯度裁剪
+- **QKV串行注意力**: 每层独立QKV计算，权重范围限制[-5, 5]
+- **状态转换机制**: 基于状态的因果推理，支持模糊匹配跳转
+- **短语学习器**: 从对话中学习短语模式，支持n-gram提取
+- **人格奖励系统**: 自适应性格调整，基于响应质量评分
+- **LRU缓存**: 带热度权重的缓存淘汰策略，支持闲置状态清理
+- **Unicode分词器**: 支持中英文混合文本，最大子词长度可配置
 
 ---
 
-## 💬 API 使用示例
+## 🚀 安装与运行
 
-### 普通对话
+### 环境要求
 
-```bash
-curl -X POST http://localhost:4000/chat \
-  -H "Content-Type: application/json" \
-  -d '{"api_key":"mtgchatgf","input":"你好呀～"}'
-```
+- Python 3.8 或更高版本
+- tkinter (通常随Python一起安装，仅GUI模式需要)
+- psutil (可选，用于CPU/内存监控)
+- lz4 (可选，用于LZ4压缩模型保存)
 
-### OpenAI 兼容接口（可以直接对接各种客户端！）
-
-```bash
-curl -X POST http://localhost:4000/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "qianyin",
-    "messages": [{"role": "user", "content": "你好呀～"}]
-  }'
-```
-
-### 训练千因（教它新东西！）
+### 安装步骤
 
 ```bash
-curl -X POST http://localhost:4000/train \
-  -H "Content-Type: application/json" \
-  -d '{"api_key":"mtgchatgf","input":"你好","response":"你好！有什么可以帮您？","mode":"refine"}'
-```
+# 1. 克隆项目
+git clone https://github.com/dfmtg/QianYin-MTG-AI-V-Causal.git
+cd QianYin-MTG-AI-V-Causal
 
-### 给千因打分（人类反馈训练）
+# 2. (可选) 安装依赖
+pip install psutil lz4
 
-```bash
-curl -X POST http://localhost:4000/feedback \
-  -H "Content-Type: application/json" \
-  -d '{
-    "api_key":"mtgchatgf",
-    "input":"你好",
-    "response":"你好！",
-    "rating":"good",
-    "corrected_response":null
-  }'
-```
-
-### CISL 接口（无鉴权，随便调）
-
-```bash
-curl -X POST http://localhost:9000/chat \
-  -H "Content-Type: application/json" \
-  -d '{"input":"你好呀","enable_training":false}'
+# 3. 运行程序
+python "MTG AI V-Causal.py"
 ```
 
 ---
 
-## 📚 训练模式大揭秘
+## 📋 功能列表
 
-| 模式 | 说明 | 适合场景 |
+### 核心功能
+
+#### 1. 多会话管理
+- 创建、重命名、删除会话
+- 会话间隔离，独立记忆
+- 自动保存与加载
+
+#### 2. 对话接口
+- 实时对话交互
+- 多轮上下文记忆
+- 情感识别与响应
+- 推理路径追踪
+- 支持OpenAI兼容格式
+
+#### 3. 训练系统
+支持四种训练模式：
+
+| 模式 | 说明 | 适用场景 |
 |------|------|----------|
-| `refine` ✨ | 精炼训练（对话式） | 日常对话学习，默认推荐！ |
-| `full` 📖 | 完整训练（逐字） | 想学得更全面时用 |
-| `intensive` 🔥 | 强化训练（重点） | 对关键词加强记忆 |
-| `interactive` 🎮 | 交互式训练（对齐） | 逐 token 对齐语义，精细调教 |
+| **精炼训练 (refine)** | 轻量化增量学习 | 日常对话优化 |
+| **完整训练 (full)** | 逐字全量训练 | 深度学习 |
+| **强化训练 (intensive)** | 重点语义强化 | 特定主题加强 |
+| **交互式训练 (interactive)** | 输入输出关联对齐 | 逻辑一致性优化 |
 
----
-
-## 🏆 人类反馈评分体系
+#### 4. 人类反馈训练
+5档评分体系，支持正向强化与负向惩罚：
 
 | 评分 | 含义 | 效果 |
 |------|------|------|
-| `excellent` / `perfect` ⭐⭐⭐ | 极致优质 | 强力正向强化！千因会超开心～ |
-| `good` / `positive` 👍 | 基础合格 | 标准正向强化 |
-| `neutral` 😐 | 中立 | 无操作，平平淡淡 |
-| `bad` / `negative` 👎 | 半对半错 | 中等惩罚，千因会反思的 |
-| `all_wrong` / `fabricated` 💀 | 全盘错误 | 最高惩罚！编造事实不可取哦 |
-| `honest` / `unknown` 🤷 | 诚实未知 | 极轻惩罚，不知道就说不知道嘛～ |
+| `excellent` / `perfect` | 极致优质 | 强力正向强化 |
+| `good` / `positive` | 基础合格 | 标准正向强化 |
+| `neutral` | 中立 | 无操作 |
+| `bad` / `negative` | 半对半错 | 中等惩罚 |
+| `all_wrong` / `fabricated` | 全盘错误 | 最高惩罚 |
+| `honest` / `unknown` | 诚实未知 | 极轻惩罚 |
 
-> 💡 也支持自定义数值评分（范围 -10 ~ +5），比如 `3.5`、`-2.5` 都可以哦！
+也支持自定义数值评分（范围-10 ~ +5）。
+
+#### 5. API服务器
+- **主端口 (4000)**: 需要API密钥的完整API接口
+- **CISL端口 (9000)**: 无鉴权免费接口
+- **OpenAI兼容**: `/v1/chat/completions` 和 `/v1/completions`
+
+#### 6. Web管理界面
+- **管理端口 (8080)**: 图形化管理后台
+- 支持对话、训练、性格、偏好、Token管理等
+
+#### 7. 模型权重管理
+- 自动保存权重文件
+- 一键备份与恢复
+- 自定义存储路径
+- 支持JSON/Gzip/LZ4压缩格式
+- 断点恢复（.tmp文件自动恢复）
+
+#### 8. 快照系统
+- 轻量化快照快速恢复
+- 定时自动快照
+- 训练分段自动快照
+
+#### 9. 硬件监控
+- CPU使用率实时显示
+- 内存占用监控
+- API服务器状态监控
+
+---
+
+## 🔌 API接口文档
+
+### 主API接口 (端口 4000)
+
+#### 对话接口
+```http
+POST /chat
+Content-Type: application/json
+
+{
+  "api_key": "你的API密钥",
+  "input": "你好，请介绍一下自己",
+  "max_output_tokens": 200,
+  "enable_training": false
+}
+```
+
+**响应示例：**
+```json
+{
+  "result": {
+    "user_input": "你好，请介绍一下自己",
+    "response": "你好！我是千因，一个基于串行因果推理的AI助手。",
+    "input_tokens": 15,
+    "output_tokens": 25,
+    "sentiment": "positive",
+    "reasoning_path": ["state_abc...", "state_def..."],
+    "layer_scores": [{"layer": 0, "score": 0.85, "action": "transition"}]
+  },
+  "api_key": "你的API密钥"
+}
+```
+
+#### OpenAI兼容接口
+```http
+POST /v1/chat/completions
+Content-Type: application/json
+
+{
+  "model": "qianyin",
+  "messages": [{"role": "user", "content": "你好"}]
+}
+```
+
+#### 训练接口
+```http
+POST /train
+Content-Type: application/json
+
+{
+  "api_key": "你的API密钥",
+  "input": "用户输入",
+  "response": "模型响应",
+  "mode": "refine"
+}
+```
+
+#### 人类反馈接口
+```http
+POST /feedback
+Content-Type: application/json
+
+{
+  "api_key": "你的API密钥",
+  "input": "用户输入",
+  "response": "AI回复",
+  "rating": "good",
+  "corrected_response": null
+}
+```
+
+#### 实例管理
+```http
+POST /create_instance    # 创建新实例
+POST /delete_instance    # 删除实例 (需要api_key)
+POST /update_tokens      # 更新Token余额 (需要api_key, amount)
+POST /rename_session     # 重命名会话 (需要api_key, new_name)
+POST /features           # 功能开关管理 (需要api_key, action, feature, enabled)
+```
+
+#### 信息查询
+```http
+GET /instances           # 获取所有实例信息
+GET /instance/{id}       # 获取单个实例详情
+GET /sessions            # 获取会话列表
+GET /personality          # 获取性格设置
+GET /preferences          # 获取偏好设置
+GET /stats               # 获取学习统计
+GET /api_info            # 获取API服务器信息
+GET /health              # 健康检查
+```
+
+#### 聊天记录
+```http
+GET /export_chat         # 导出对话历史
+POST /import_chat         # 导入对话历史 (需要api_key, chat_history)
+```
+
+#### 模型操作
+```http
+POST /save_model         # 保存模型 (需要api_key, path, use_gzip)
+POST /load_model         # 加载模型 (需要api_key, path)
+```
+
+### CISL免费接口 (端口 9000)
+
+```http
+POST /chat
+Content-Type: application/json
+
+{
+  "input": "你好",
+  "enable_training": false,
+  "max_output_tokens": 200
+}
+```
+
+```http
+POST /feedback
+Content-Type: application/json
+
+{
+  "input": "用户输入",
+  "response": "AI回复",
+  "rating": "good",
+  "corrected_response": null
+}
+```
+
+**特点：**
+- 无需API密钥
+- 使用默认免费实例 (mtgchatgf)
+- 完全免费使用
+
+---
+
+## 📊 返回数据结构
+
+所有接口返回统一格式：
+
+```json
+{
+  "result": {
+    "user_input": "原始用户输入",
+    "response": "模型最终输出",
+    "input_tokens": 15,
+    "output_tokens": 25,
+    "sentiment": "positive/negative/neutral",
+    "reasoning_path": ["state_..."],
+    "layer_scores": [...]
+  },
+  "api_key": "使用的API密钥"
+}
+```
+
+---
+
+## 💰 Token系统
+
+### Token额度
+
+- **免费实例 (mtgchatgf)**: 无限制使用
+- **付费实例**: 初始1000 tokens，可通过接口充值
+
+### Token扣除规则
+
+每次对话自动扣除：`input_tokens + output_tokens`
 
 ---
 
 ## ⚙️ 配置文件
 
-启动时会自动读取 `config.json`，第一次运行会生成默认配置：
+程序首次运行自动生成以下配置文件：
+
+- `config.json`: 权重路径、端口、语言设置等
+- `api_keys.json`: API密钥与实例映射
+- `language.json`: 自定义语言包
+- `weights_info.json`: 权重版本信息
+
+### 配置项说明
 
 ```json
 {
@@ -146,64 +349,123 @@ curl -X POST http://localhost:9000/chat \
 
 ---
 
-## 📁 文件说明
+## 🌐 跨平台兼容性
 
-| 文件 | 说明 |
-|------|------|
-| `config.json` | 🗂️ 主配置文件 |
-| `api_keys.json` | 🔑 API 密钥与 Token 管理 |
-| `weights_info.json` | 📊 权重元信息 |
-| `language.json` | 🌐 自定义语言包 |
-| `*.model.json` | 💾 完整模型文件 |
-| `*.model.json.gz` | 📦 Gzip 压缩模型 |
-| `*.model.json.lz4` | 🚀 LZ4 超快压缩模型 |
-| `model.snapshot.json.gz` | 📸 轻量化快照（快速恢复用） |
-| `mtg_ai_errors.log` | 🐛 错误日志 |
-| `mtg_ai_performance.log` | ⚡ 性能日志 |
+### Windows
+- ✅ 完整支持
+- ✅ tkinter自带支持
+- ✅ IPv4/IPv6双栈
+
+### macOS
+- ✅ 完整支持
+- ✅ tkinter需手动安装 (`brew install python-tk`)
+- ✅ IPv4/IPv6双栈
+- ✅ 支持Intel和M系列芯片
+
+### Linux
+- ✅ 完整支持
+- ✅ tkinter需手动安装 (`sudo apt-get install python3-tk`)
+- ✅ IPv4/IPv6双栈
 
 ---
 
-## 🏗️ 技术架构
+## 🔧 故障排除
 
-```
-┌─────────────────────────────────────────────┐
-│        🖥️  Web 管理界面 (端口 8080)          │
-│     聊天 / 训练 / 性格 / 偏好 一站式搞定！    │
-├─────────────────────────────────────────────┤
-│  🔌 LLMAPIHandler (4000)  │  🎯 CISLAPIHandler (9000)  │
-│      OpenAI 兼容接口          无鉴权免费接口          │
-├─────────────────────────────────────────────┤
-│         🧠 LightweightMultiLayerLLM          │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐    │
-│  │ 📐 Semantic│ │🔍 QKVSerial│ │📚 Phrase │    │
-│  │  Encoder  │ │ Attention │ │  Learner │    │
-│  └──────────┘ └──────────┘ └──────────┘    │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐    │
-│  │ 🔤 Unicode│ │🎭 Personality│ │💖 Reward │    │
-│  │  Tokenizer│ │  System   │ │  System  │    │
-│  └──────────┘ └──────────┘ └──────────┘    │
-└─────────────────────────────────────────────┘
+### 问题1: CPU/内存显示"N/A"
+**解决方案**: 安装psutil
+```bash
+pip install psutil
 ```
 
+### 问题2: tkinter导入错误
+**Windows**: 重新安装Python，勾选"tcl/tk"选项
+**macOS**: `brew install python-tk`
+**Linux**: `sudo apt-get install python3-tk`
+
+### 问题3: 端口被占用
+修改`config.json`中的端口号：
+```json
+{
+  "port": 4001,
+  "cjsl_port": 9001,
+  "admin_port": 8081
+}
+```
+
+### 问题4: LZ4压缩不可用
+**解决方案**: 安装lz4库
+```bash
+pip install lz4
+```
+
 ---
 
-## 📦 依赖
+## 📝 开发指南
 
-- Python 3.8+
-- **零第三方依赖！** 只用标准库，装好 Python 就能跑 🎉
+### 添加自定义语言包
+
+1. 创建JSON文件：
+```json
+{
+  "zh": {
+    "title": "你的标题",
+    "send": "发送",
+    "new_session": "新会话"
+  }
+}
+```
+
+2. 在GUI中: 语言设置 → 导入语言包
+
+### 扩展API接口
+
+在`LLMAPIHandler`类的`do_POST`或`do_GET`方法中添加新接口。
 
 ---
 
-## 💌 写在最后
+## 🤝 贡献指南
 
-千因是一个正在学习成长的小 AI 哦～(｡•̀ᴗ-)✧
+欢迎提交Issue和Pull Request！
 
-它没有庞大的参数，也没有复杂的神经网络，
-但每一层注意力、每一个语义向量，都是它"思考"的痕迹。
-
-欢迎来和千因聊天、教它新东西、塑造它的性格！
-让我们一起见证千因的成长吧～ 🌱✨
+1. Fork 本项目
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 创建Pull Request
 
 ---
 
-**许可证**：MIT 🎊
+## 📄 许可证
+
+本项目采用 GNU 通用公共许可证 v3.0 (GPLv3) - 详见 [LICENSE](LICENSE) 文件
+
+---
+
+## 👨‍💻 作者
+
+**千因 MTG AI V-Causal**
+
+- GitHub: https://github.com/dfmtg
+- 邮箱: mtgwimtg@163.com
+
+---
+
+## 🙏 致谢
+
+- Python社区
+- Tkinter团队
+- 所有开源贡献者
+
+---
+
+## 📌 项目状态
+
+![Status](https://img.shields.io/badge/Status-Stable-brightgreen)
+![Version](https://img.shields.io/badge/Version-2.26-blue)
+![Python](https://img.shields.io/badge/Python-3.8+-orange)
+
+---
+
+**⭐ 如果这个项目对你有帮助，请给我们一个Star！**
+
+**🚀 让我们一起探索串行因果推理的无限可能！**

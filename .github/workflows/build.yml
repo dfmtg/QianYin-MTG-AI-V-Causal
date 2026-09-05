@@ -1,0 +1,82 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-latest
+          - macos-latest
+          - ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build on Windows
+        if: matrix.os == 'windows-latest'
+        shell: bash
+        run: |
+          pyinstaller --onefile --name "QianYin-MTG-AI-V-Causal-Windows" "MTG AI V-Causal.py"
+
+      - name: Build on macOS (Intel/ARM)
+        if: matrix.os == 'macos-latest'
+        shell: bash
+        run: |
+          # 检测芯片架构
+          ARCH=$(uname -m)
+          if [ "$ARCH" = "arm64" ]; then
+            # M系列芯片：使用arm64架构
+            pyinstaller --onefile --name "QianYin-MTG-AI-V-Causal-macOS-ARM64" "MTG AI V-Causal.py"
+          else
+            # 英特尔芯片：使用x86_64架构
+            pyinstaller --onefile --name "QianYin-MTG-AI-V-Causal-macOS-Intel" "MTG AI V-Causal.py"
+          fi
+
+      - name: Build on Linux
+        if: matrix.os == 'ubuntu-latest'
+        shell: bash
+        run: |
+          pyinstaller --onefile --name "QianYin-MTG-AI-V-Causal-Linux" "MTG AI V-Causal.py"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.os }}-artifact
+          path: dist/*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: artifacts
+          draft: false
+          prerelease: false
+          token: ${{ secrets.GITHUB_TOKEN }}
