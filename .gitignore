@@ -1,0 +1,107 @@
+# 千因 MTG AI V-Causal .gitignore
+
+# ============================================
+# Python
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ============================================
+# IDE
+# ============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ============================================
+# 自动生成的文件
+# Auto-generated files
+# ============================================
+config.json
+api_keys.json
+language.json
+weights_info.json
+mtg_ai_errors.log
+*.log
+
+# ============================================
+# 权重文件夹
+# Weights folder
+# ============================================
+llm_weights/
+*.json
+
+# ============================================
+# 备份文件
+# Backup files
+# ============================================
+*.bak
+*.backup
+*~
+
+# ============================================
+# 临时文件
+# Temporary files
+# ============================================
+*.tmp
+*.temp
+temp/
+tmp/
+
+# ============================================
+# 虚拟环境
+# Virtual environments
+# ============================================
+venv/
+env/
+ENV/
+
+# ============================================
+# 测试覆盖率
+# Test coverage
+# ============================================
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# ============================================
+# Jupyter Notebook
+# ============================================
+.ipynb_checkpoints
+
+# ============================================
+# 打包文件
+# Distribution / packaging
+# ============================================
+.pyinstaller/
+*.whl
+*.tar.gz
+*.zip

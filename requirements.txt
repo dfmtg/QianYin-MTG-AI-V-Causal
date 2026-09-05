@@ -1,0 +1,124 @@
+# 千因 MTG AI V-Causal 依赖列表
+# QianYin MTG AI V-Causal Dependencies
+
+# ============================================
+# 核心依赖 (必选)
+# Core Dependencies (Required)
+# ============================================
+
+# Python 3.8+ (项目要求)
+# Python 3.8+ (Project Requirement)
+# 内置模块，无需安装：
+# Built-in modules, no installation needed:
+# - json
+# - threading
+# - time
+# - random
+# - os
+# - socket
+# - tkinter (通常随Python一起安装)
+# - tkinter (usually comes with Python)
+
+# ============================================
+# 可选依赖 (推荐安装)
+# Optional Dependencies (Recommended)
+# ============================================
+
+# psutil - 用于CPU和内存监控
+# psutil - For CPU and memory monitoring
+# 安装命令: pip install psutil
+psutil>=5.9.0
+
+# requests - 用于API测试
+# requests - For API testing
+# 安装命令: pip install requests
+requests>=2.28.0
+
+# ============================================
+# 平台特定说明
+# Platform-Specific Notes
+# ============================================
+
+# Windows (视窗系统)
+# - tkinter: 通常预装，无需额外安装
+# - tkinter: Usually pre-installed, no extra installation needed
+
+# macOS (苹果系统)
+# - 安装tkinter: brew install python-tk
+# - Install tkinter: brew install python-tk
+
+# Linux (Linux系统)
+# - Ubuntu/Debian: sudo apt-get install python3-tk
+# - Fedora/RHEL: sudo dnf install python3-tkinter
+# - Install tkinter: sudo apt-get install python3-tk
+
+# ============================================
+# 快速安装
+# Quick Installation
+# ============================================
+
+# 安装所有依赖 (安装所有依赖)
+# Install all dependencies
+# pip install -r requirements.txt
+
+# 仅安装核心依赖 (仅安装核心功能)
+# Install core dependencies only
+# pip install psutil requests
+
+# ============================================
+# 版本兼容性
+# Version Compatibility
+# ============================================
+
+# Python 3.8: ✓ 已测试 (Tested)
+# Python 3.9: ✓ 应该兼容 (Should work)
+# Python 3.10: ✓ 应该兼容 (Should work)
+# Python 3.11: ✓ 应该兼容 (Should work)
+# Python 3.12: ✓ 应该兼容 (Should work)
+
+# ============================================
+# 故障排除
+# Troubleshooting
+# ============================================
+
+# tkinter问题:
+# tkinter issues:
+# - Windows: 重新安装Python，勾选"tcl/tk"选项
+# - macOS: brew install python-tk
+# - Linux: sudo apt-get install python3-tk
+
+# psutil安装失败:
+# psutil installation failed:
+# - 使用预编译版本: pip install --only-binary :all: psutil
+# - 使用预编译版本: pip install psutil --force-reinstall
+
+# ============================================
+# 许可信息
+# License Information
+# ============================================
+
+# psutil: BSD License
+# requests: Apache 2.0 License
+
+# ============================================
+# 项目信息
+# Project Information
+# ============================================
+
+# 项目名称: 千因 - MTG AI V-Causal
+# Project Name: QianYin - MTG AI V-Causal
+
+# 版本: 1.0
+# Version: 1.0
+
+# 描述: 新型串行因果推理AI系统
+# Description: Next-Generation Serial Causal Inference AI System
+
+# 架构: 串行因果推理 (非Transformer)
+# Architecture: Serial Causal Inference (Non-Transformer)
+
+# 运行平台: Windows/macOS/Linux
+# Running Platform: Windows/macOS/Linux
+
+# GPU要求: 无 (纯CPU运行)
+# GPU Requirement: None (CPU-only)
